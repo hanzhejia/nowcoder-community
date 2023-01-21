@@ -12,6 +12,17 @@ spring:
       password: root
   thymeleaf:
     cache: false
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: jhz222@qq.com
+    password: ljnfzuwrqwwaidhd
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -19,4 +30,3 @@ mybatis:
   configuration:
     use-generated-keys: true
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
