@@ -9,7 +9,11 @@ class NowcoderCommunityApplicationTests {
     @Test
     void contextLoads() {
         //123123
-        //this is main
+<<<<<<< HEAD
+        //this is main commit
+=======
+        //this is dev
+>>>>>>> dev
     }
 
 }
