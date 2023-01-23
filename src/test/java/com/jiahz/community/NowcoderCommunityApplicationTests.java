@@ -9,6 +9,7 @@ class NowcoderCommunityApplicationTests {
     @Test
     void contextLoads() {
         //123123
+        //hahaha
     }
 
 }
