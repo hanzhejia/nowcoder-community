@@ -30,3 +30,8 @@ mybatis:
   configuration:
     use-generated-keys: true
     map-underscore-to-camel-case: true
+
+# community
+community:
+  path:
+    domain: http://localhost:8080

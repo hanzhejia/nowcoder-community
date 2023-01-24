@@ -15,5 +15,11 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
     User selectUserById(@Param("id") int id);
 
+    User selectUserByUsername(@Param("username") String username);
 
+    User selectUserByEmail(@Param("email") String email);
+
+    int insertUser(User user);
+
+    int updateStatus(@Param("id") int id, @Param("status") int status);
 }
