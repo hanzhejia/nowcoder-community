@@ -35,3 +35,4 @@ mybatis:
 community:
   path:
     domain: http://localhost:8080
+    upload: /Users/jiahanzhe/workspace/java-workspace/java-learn/nowcoder-community/upload

@@ -1,7 +1,6 @@
 package com.jiahz.community.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,10 +17,9 @@ import javax.mail.internet.MimeMessage;
  * @Date: 2023/1/20 21:01
  * @Description:
  */
+@Slf4j
 @Component
 public class MailClient {
-
-    private static final Logger logger = LoggerFactory.getLogger(MailClient.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -39,7 +37,7 @@ public class MailClient {
             helper.setText(content, true);
             mailSender.send(helper.getMimeMessage());
         } catch (MessagingException e) {
-            logger.error("发送邮件失败: " + e.getMessage());
+            log.error("发送邮件失败: " + e.getMessage());
         }
     }
 }
