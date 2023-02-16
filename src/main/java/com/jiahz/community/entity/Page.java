@@ -1,7 +1,5 @@
 package com.jiahz.community.entity;
 
-import lombok.Data;
-
 /**
  * ClassName: Page
  *
@@ -9,7 +7,6 @@ import lombok.Data;
  * @Date: 2023/1/19 16:38
  * @Description: 封装分页相关信息
  */
-@Data
 public class Page {
     // 当前页码
     private int current = 1;
@@ -17,11 +14,52 @@ public class Page {
     private int size = 10;
     // 数据总数
     private int rows;
+
     //查询路径
     private String path;
 
+    public int getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(int current) {
+        if (current >= 1) {
+            this.current = current;
+        }
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        if (size >= 1 && size <= 100) {
+            this.size = size;
+        }
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        if (rows >= 0) {
+            this.rows = rows;
+        }
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+
     /**
      * 获取当前页的起始行
+     *
      * @return
      */
     public int getOffset() {
@@ -30,6 +68,7 @@ public class Page {
 
     /**
      * 获取总页数
+     *
      * @return
      */
     public int getTotal() {
@@ -42,6 +81,7 @@ public class Page {
 
     /**
      * 获取起始页码
+     *
      * @return
      */
     public int getFrom() {
@@ -51,6 +91,7 @@ public class Page {
 
     /**
      * 获取结束页码
+     *
      * @return
      */
     public int getTo() {

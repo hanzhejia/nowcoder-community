@@ -21,4 +21,7 @@ public interface DiscussPostMapper {
     //如果只有一个参数，且在动态sql标签中使用，则必须加别名@Param
     int selectDiscussPostCount(@Param("userId") int userId);
 
+    int insertDiscussPost(DiscussPost discussPost);
+
+    DiscussPost selectDiscussPostById(@Param("id") int id);
 }
