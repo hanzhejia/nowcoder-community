@@ -2,10 +2,7 @@ package com.jiahz.community.controller;
 
 import com.jiahz.community.util.CommunityUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -38,5 +35,15 @@ public class TestController {
     public String getCookie(@CookieValue("code") String code) {
         System.out.println(code);
         return "get cookie";
+    }
+
+    // test ajax
+    @PostMapping("/ajax")
+    @ResponseBody
+    public String testAjax(String name, int age) {
+        System.out.println(name);
+        System.out.println(age);
+        return CommunityUtil.getJSONString(0, "success");
+
     }
 }
