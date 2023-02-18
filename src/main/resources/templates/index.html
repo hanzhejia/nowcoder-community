@@ -141,12 +141,11 @@
                         </h6>
                         <div class="text-muted font-size-12">
                             <u class="mr-3" th:utext="${map.user.username}"></u> 发布于 <b
-                                th:text="${#dates.format(map.post.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15
-                            15:32:18</b>
+                                th:text="${#dates.format(map.post.createTime,'yyyy-MM-dd HH:mm:ss')}"></b>
                             <ul class="d-inline float-right">
                                 <li class="d-inline ml-2">赞 123</li>
                                 <li class="d-inline ml-2">|</li>
-                                <li class="d-inline ml-2">回帖 123</li>
+                                <li class="d-inline ml-2">回帖 <span th:text="${map.post.commentCount}"></span></li>
                             </ul>
                         </div>
                     </div>
@@ -154,7 +153,7 @@
 
             </ul>
             <!-- 分页 -->
-            <nav class="mt-5" th:if="${page.rows>0}">
+            <nav class="mt-5" th:if="${page.rows>0}" th:fragment="pagination">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
                         <a class="page-link" th:href="@{${page.path}(current=1)}">首页</a>

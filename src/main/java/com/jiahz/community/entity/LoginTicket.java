@@ -11,9 +11,9 @@ import java.util.Date;
 @Data
 public class LoginTicket {
 
-    private int id;
-    private int userId;
+    private Integer id;
+    private Integer userId;
     private String ticket;
-    private int status;
+    private Integer status;
     private Date expired;
 }
