@@ -52,6 +52,10 @@ public class UserService {
         return userMapper.selectUserById(id);
     }
 
+    public User getUserByUserName(String username) {
+        return userMapper.selectUserByUsername(username);
+    }
+
     public Map<String, Object> register(User user) {
         Map<String, Object> map = new HashMap<>();
         if (user == null) {
@@ -192,7 +196,7 @@ public class UserService {
             map.put("oldPasswordMsg", "原密码输入有误!");
             return map;
         }
-        
+
         // 更新密码
         newPassword = CommunityUtil.MD5(newPassword + user.getSalt());
         userMapper.updatePassword(userId, newPassword);

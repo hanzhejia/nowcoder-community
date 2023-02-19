@@ -11,7 +11,7 @@ public class Page {
     // 当前页码
     private int current = 1;
     // 一页放多少条数据
-    private int size = 10;
+    private int limit = 10;
     // 数据总数
     private int rows;
 
@@ -28,13 +28,13 @@ public class Page {
         }
     }
 
-    public int getSize() {
-        return size;
+    public int getLimit() {
+        return limit;
     }
 
-    public void setSize(int size) {
-        if (size >= 1 && size <= 100) {
-            this.size = size;
+    public void setLimit(int limit) {
+        if (limit >= 1 && limit <= 100) {
+            this.limit = limit;
         }
     }
 
@@ -63,7 +63,7 @@ public class Page {
      * @return
      */
     public int getOffset() {
-        return (current - 1) * size;
+        return (current - 1) * limit;
     }
 
     /**
@@ -72,10 +72,10 @@ public class Page {
      * @return
      */
     public int getTotal() {
-        if (rows % size == 0) {
-            return rows / size;
+        if (rows % limit == 0) {
+            return rows / limit;
         } else {
-            return rows / size + 1;
+            return rows / limit + 1;
         }
     }
 

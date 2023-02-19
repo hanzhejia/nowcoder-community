@@ -71,14 +71,14 @@ public class DiscussPostController {
         model.addAttribute("user", user);
 
         // 评论
-        page.setSize(5);
+        page.setLimit(5);
         page.setPath("/discuss/detail/" + id);
         page.setRows(post.getCommentCount());
 
         // 评论: 给帖子的评论; 回复: 给评论的评论
         // 评论列表
         List<Comment> commentList = commentService.getCommentByEntity(
-                EntityTypeEnum.ENTITY_TYPE_POST.getEntityType(), post.getId(), page.getOffset(), page.getSize());
+                EntityTypeEnum.ENTITY_TYPE_POST.getEntityType(), post.getId(), page.getOffset(), page.getLimit());
 
         // 评论VO列表
         List<Map<String, Object>> commentVoList = new ArrayList<>();
