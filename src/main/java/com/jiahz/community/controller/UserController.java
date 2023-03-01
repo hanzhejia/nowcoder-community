@@ -2,6 +2,7 @@ package com.jiahz.community.controller;
 
 import com.jiahz.community.annotation.LoginRequired;
 import com.jiahz.community.entity.User;
+import com.jiahz.community.service.LikeService;
 import com.jiahz.community.service.UserService;
 import com.jiahz.community.util.CommunityUtil;
 import com.jiahz.community.util.HostHolder;
@@ -38,6 +39,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LikeService likeService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -128,6 +132,21 @@ public class UserController {
             model.addAttribute("newPasswordMsg", map.get("newPasswordMsg"));
             return "/site/setting";
         }
+    }
+
+    @GetMapping("/profile/{userId}")
+    public String getProfilePage(@PathVariable("userId") int userId, Model model) {
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在");
+        }
+        // 用户
+        model.addAttribute("user", user);
+        // 点赞数量
+        int likeCount = likeService.getUserLikeCount(userId);
+        model.addAttribute("likeCount", likeCount);
+        return "site/profile";
+
     }
 
 }

@@ -23,6 +23,11 @@ spring:
         smtp:
           ssl:
             enable: true
+  # RedisProperties
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

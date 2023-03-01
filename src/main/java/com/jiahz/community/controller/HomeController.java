@@ -4,7 +4,9 @@ import com.jiahz.community.entity.DiscussPost;
 import com.jiahz.community.entity.Page;
 import com.jiahz.community.entity.User;
 import com.jiahz.community.service.DiscussPostService;
+import com.jiahz.community.service.LikeService;
 import com.jiahz.community.service.UserService;
+import com.jiahz.community.util.EntityTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,9 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LikeService likeService;
+
     @GetMapping("/index")
     public String index(Model model, Page page) {
         page.setRows(discussPostService.getDiscussPostCount(0));
@@ -42,6 +47,9 @@ public class HomeController {
                 map.put("post", post);
                 User user = userService.getUserById(post.getUserId());
                 map.put("user", user);
+                long likeCount = likeService.getEntityLikeCount(EntityTypeEnum.ENTITY_TYPE_POST.getEntityType(), post.getId());
+                map.put("likeCount", likeCount);
+
                 discussPosts.add(map);
             }
         }
