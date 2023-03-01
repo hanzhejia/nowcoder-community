@@ -2,13 +2,16 @@ package com.jiahz.community.controller;
 
 import com.google.code.kaptcha.Producer;
 import com.jiahz.community.entity.User;
+import com.jiahz.community.enums.ActivationEnum;
+import com.jiahz.community.enums.ExpiredEnum;
 import com.jiahz.community.service.UserService;
-import com.jiahz.community.util.ActivationEnum;
-import com.jiahz.community.util.ExpiredEnum;
+import com.jiahz.community.util.CommunityUtil;
+import com.jiahz.community.util.RedisKeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -20,10 +23,10 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * ClassName: LoginController
@@ -41,6 +44,9 @@ public class LoginController {
 
     @Autowired
     private Producer kaptchaProducer;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
@@ -88,10 +94,24 @@ public class LoginController {
     }
 
     @GetMapping("/kaptcha")
-    public void getKaptcha(HttpServletResponse response, HttpSession session) {
+    public void getKaptcha(HttpServletResponse response/*, HttpSession session*/) {
         String text = kaptchaProducer.createText();
         BufferedImage image = kaptchaProducer.createImage(text);
-        session.setAttribute("kaptcha", text);
+        // 存入session
+        // session.setAttribute("kaptcha", text);
+
+        // 验证码的归属
+        String kaptchaOwner = CommunityUtil.generateUUID();
+        Cookie cookie = new Cookie("kaptchaOwner", kaptchaOwner);
+        cookie.setMaxAge(60);
+        cookie.setPath(contextPath);
+        response.addCookie(cookie);
+
+        // 将验证码存入redis
+        String kaptchaKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
+        redisTemplate.opsForValue().set(kaptchaKey, text, 60, TimeUnit.SECONDS);
+
+        // 将图片输出给客户端
         response.setContentType("/image/png");
         try {
             ServletOutputStream outputStream = response.getOutputStream();
@@ -103,9 +123,16 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(String username, String password, String code, boolean isRememberMe,
-                        Model model, HttpSession session, HttpServletResponse response) {
+                        Model model/*, HttpSession session*/, HttpServletResponse response,
+                        @CookieValue("kaptchaOwner") String kaptchaOwner) {
         // 检查验证码
-        String kaptcha = (String) session.getAttribute("kaptcha");
+        // String kaptcha = (String) session.getAttribute("kaptcha");
+        String kaptcha = null;
+        if (StringUtils.isNotBlank(kaptchaOwner)) {
+            String kaptchaKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
+            kaptcha = (String) redisTemplate.opsForValue().get(kaptchaKey);
+        }
+        
         if (StringUtils.isBlank(kaptcha) || StringUtils.isBlank(code) || !kaptcha.equalsIgnoreCase(code)) {
             model.addAttribute("codeMsg", "验证码不正确!");
             return "/site/login";

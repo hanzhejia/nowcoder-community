@@ -1,9 +1,9 @@
 package com.jiahz.community.service;
 
 import com.jiahz.community.entity.Comment;
+import com.jiahz.community.enums.EntityTypeEnum;
 import com.jiahz.community.mapper.CommentMapper;
 import com.jiahz.community.mapper.DiscussPostMapper;
-import com.jiahz.community.util.EntityTypeEnum;
 import com.jiahz.community.util.SensitiveWordsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

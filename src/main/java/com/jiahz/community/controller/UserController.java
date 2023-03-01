@@ -2,11 +2,11 @@ package com.jiahz.community.controller;
 
 import com.jiahz.community.annotation.LoginRequired;
 import com.jiahz.community.entity.User;
+import com.jiahz.community.enums.EntityTypeEnum;
 import com.jiahz.community.service.FollowService;
 import com.jiahz.community.service.LikeService;
 import com.jiahz.community.service.UserService;
 import com.jiahz.community.util.CommunityUtil;
-import com.jiahz.community.util.EntityTypeEnum;
 import com.jiahz.community.util.HostHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

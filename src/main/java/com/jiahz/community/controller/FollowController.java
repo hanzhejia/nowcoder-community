@@ -2,10 +2,10 @@ package com.jiahz.community.controller;
 
 import com.jiahz.community.entity.Page;
 import com.jiahz.community.entity.User;
+import com.jiahz.community.enums.EntityTypeEnum;
 import com.jiahz.community.service.FollowService;
 import com.jiahz.community.service.UserService;
 import com.jiahz.community.util.CommunityUtil;
-import com.jiahz.community.util.EntityTypeEnum;
 import com.jiahz.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

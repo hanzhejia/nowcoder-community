@@ -1,4 +1,4 @@
-package com.jiahz.community.util;
+package com.jiahz.community.enums;
 
 /**
  * @Author: jiahz
