@@ -2,9 +2,11 @@ package com.jiahz.community.controller;
 
 import com.jiahz.community.annotation.LoginRequired;
 import com.jiahz.community.entity.User;
+import com.jiahz.community.service.FollowService;
 import com.jiahz.community.service.LikeService;
 import com.jiahz.community.service.UserService;
 import com.jiahz.community.util.CommunityUtil;
+import com.jiahz.community.util.EntityTypeEnum;
 import com.jiahz.community.util.HostHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +44,9 @@ public class UserController {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private FollowService followService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -145,6 +150,19 @@ public class UserController {
         // 点赞数量
         int likeCount = likeService.getUserLikeCount(userId);
         model.addAttribute("likeCount", likeCount);
+        // 关注数量
+        long followeeCount = followService.getFolloweeCount(userId, EntityTypeEnum.ENTITY_TYPE_USER.getEntityType());
+        model.addAttribute("followeeCount", followeeCount);
+        // 粉丝数量
+        long followerCount = followService.getFollowerCount(EntityTypeEnum.ENTITY_TYPE_USER.getEntityType(), userId);
+        model.addAttribute("followerCount", followerCount);
+        // 是否已被当前登陆用户关注
+        boolean hasFollowed = false;
+        if (hostHolder.getUser() != null) {
+            hasFollowed = followService.hasFollowed
+                    (hostHolder.getUser().getId(), EntityTypeEnum.ENTITY_TYPE_USER.getEntityType(), userId);
+        }
+        model.addAttribute("hasFollowed", hasFollowed);
         return "site/profile";
 
     }

@@ -9,7 +9,8 @@ package com.jiahz.community.util;
  */
 public enum EntityTypeEnum {
     ENTITY_TYPE_POST(1),
-    ENTITY_TYPE_COMMENT(2);
+    ENTITY_TYPE_COMMENT(2),
+    ENTITY_TYPE_USER(3);
 
     private int entityType;
 
