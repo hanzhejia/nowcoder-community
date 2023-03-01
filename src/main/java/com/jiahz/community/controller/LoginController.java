@@ -124,7 +124,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(String username, String password, String code, boolean isRememberMe,
                         Model model/*, HttpSession session*/, HttpServletResponse response,
-                        @CookieValue("kaptchaOwner") String kaptchaOwner) {
+                        @CookieValue(value = "kaptchaOwner", required = false) String kaptchaOwner) {
         // 检查验证码
         // String kaptcha = (String) session.getAttribute("kaptcha");
         String kaptcha = null;
@@ -132,7 +132,7 @@ public class LoginController {
             String kaptchaKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
             kaptcha = (String) redisTemplate.opsForValue().get(kaptchaKey);
         }
-        
+
         if (StringUtils.isBlank(kaptcha) || StringUtils.isBlank(code) || !kaptcha.equalsIgnoreCase(code)) {
             model.addAttribute("codeMsg", "验证码不正确!");
             return "/site/login";

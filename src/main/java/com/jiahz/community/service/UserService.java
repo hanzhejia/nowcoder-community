@@ -113,7 +113,7 @@ public class UserService {
             return ActivationEnum.ACTIVATION_FAILURE.getActivationStatus();
         } else {
             userMapper.updateStatus(userId, 1);
-            clearCache(userId);
+//            clearCache(userId);
             return ActivationEnum.ACTIVATION_SUCCESS.getActivationStatus();
         }
     }
@@ -196,7 +196,7 @@ public class UserService {
         // 更新密码
         newPassword = CommunityUtil.MD5(newPassword + user.getSalt());
         userMapper.updatePassword(userId, newPassword);
-        clearCache(userId);
+//        clearCache(userId);
 
         return map;
     }
@@ -209,7 +209,7 @@ public class UserService {
 
     public int updateHeaderUrl(int userId, String headerUrl) {
         int rows = userMapper.updateHeader(userId, headerUrl);
-        clearCache(userId);
+//        clearCache(userId);
         return rows;
     }
 
@@ -242,9 +242,9 @@ public class UserService {
     }
 
     // 3. 数据变更时删除缓存数据
-    private void clearCache(int userId) {
-        String userKey = RedisKeyUtil.getUserKey(userId);
-        redisTemplate.delete(userKey);
-    }
+//    private void clearCache(int userId) {
+//        String userKey = RedisKeyUtil.getUserKey(userId);
+//        redisTemplate.delete(userKey);
+//    }
 
 }
